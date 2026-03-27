@@ -1,0 +1,36 @@
+{
+  "name": "std-components",
+  "version": "0.1.0",
+  "description": "Standard HTML components as functions",
+  "type": "module",
+  "source": "index.ts",
+  "types": "index.d.ts",
+  "exports": {
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "prepublish": "pnpm run build",
+    "dry": "pnpm publish --dry-run --no-git-checks"
+  },
+  "keywords": [
+    "standard",
+    "html",
+    "component",
+    "dom",
+    "vanilla",
+    "js",
+    "ts",
+    "library"
+  ],
+  "author": "Thiago Delgado Pinto",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.1",
+  "devDependencies": {
+    "tsdown": "^0.21.6"
+  }
+}
