@@ -1,5 +1,5 @@
 [![npm (tag)](https://img.shields.io/npm/v/std-components?color=green&label=NPM&style=for-the-badge)](https://github.com/thiagodp/std-components/releases)
-[![License](https://img.shields.io/npm/l/std-components.svg?style=for-the-badge&color=green)](https://github.com/thiagodp/std-components/blob/master/LICENSE)
+[![License](https://img.shields.io/npm/l/std-components?style=for-the-badge&color=green)](https://github.com/thiagodp/std-components/blob/main/LICENSE)
 <!-- [![npm](https://img.shields.io/npm/dt/std-components?style=for-the-badge&color=green)](https://www.npmjs.com/package/std-components) -->
 
 # std-components
@@ -17,7 +17,31 @@
 pnpm i std-components
 ```
 
-## Example
+## Examples
+
+### Simple blog post
+
+```js
+import { article, header, title, p } from 'std-components';
+
+const post = article( { class: 'post' },
+    header( {}, title( {}, 'First Post' ) ),
+    p( {}, 'Hello, world!' )
+);
+
+document.body.append( post );
+```
+
+produces a `<body>` with:
+
+```html
+<article class="post">
+    <header><title>First Post</title></header>
+    <p>Hello, world!</p>
+</article>
+```
+
+### Table rows
 
 Let's say that a users table like this...
 
@@ -70,7 +94,7 @@ const rows = users.map( u => userRow( u ) );
 document.querySelector( 'tbody' ).append( fragment( ...rows ) ); // Fragment avoids DOM reflow
 ```
 
-The example above **without using** `std-components` would be:
+👉 The example above **without using** `std-components` would be:
 
 ```ts
 function removeUser() { /*...*/ }
@@ -105,6 +129,32 @@ const fragment = document.createDocumentFragment(); // Avoids DOM reflow
 fragment.append( ...rows );
 document.querySelector( 'tbody' ).append( fragment );
 ```
+
+
+## Reactivity
+
+If you need reactivity, use a library such as [@preact/signals-core](https://www.npmjs.com/package/@preact/signals-core), [S.js](https://github.com/adamhaile/S) or [usignal](https://github.com/WebReflection/usignal), that are not tied to a UI library/framework.
+
+Example with `@preact/signals-core`:
+
+```js
+import { button } from 'std-components';
+import { signal, effect } from '@preact/signals-core';
+
+// count starts at 0
+const count = signal( 0 );
+
+// When clicked, the button increments the count
+const btn = button( { events: { click: () => count.value++ } } );
+
+// When count changes, generates an effect that updates the button text
+effect( () => {
+    btn.textContent = `Clicked ${count.value} times`
+} );
+
+document.body.append( btn );
+```
+
 
 ## API
 
@@ -147,6 +197,7 @@ where:
 - `fragment( ...children: Array<string|Node|HTMLElement> ): DocumentFragment` creates a [DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment).
 - `text( value: string = '' ): Text` creates a [text node](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode).
 - `component< T extends HTMLElement >( tag: string, props: {[key: string]: any} = {}, ...children: Array<string|Node|HTMLElement> ): T` creates any DOM component. You probably won't need to use it.
+
 
 ## License
 
