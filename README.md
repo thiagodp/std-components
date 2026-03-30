@@ -1,6 +1,6 @@
 [![npm (tag)](https://img.shields.io/npm/v/std-components?color=green&label=NPM&style=for-the-badge)](https://github.com/thiagodp/std-components/releases)
 [![License](https://img.shields.io/npm/l/std-components?style=for-the-badge&color=green)](https://github.com/thiagodp/std-components/blob/main/LICENSE)
-<!-- [![npm](https://img.shields.io/npm/dt/std-components?style=for-the-badge&color=green)](https://www.npmjs.com/package/std-components) -->
+[![npm](https://img.shields.io/npm/dt/std-components?style=for-the-badge&color=green)](https://www.npmjs.com/package/std-components)
 
 # std-components
 
@@ -18,6 +18,10 @@ pnpm i std-components
 ```
 
 ## Examples
+
+👉 See [/examples](examples) for full examples.
+
+### Blog post
 
 ```js
 import { article, header, h2, p } from 'std-components';
@@ -47,9 +51,77 @@ produces a `<body>` with:
 </article>
 ```
 
-👉 See [/examples](examples) for more.
+### To-do-list
 
+Suppose an HTML like this:
 
+```html
+<h1>To-Do-List</h1>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Description</th>
+            <th>Done</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+```
+
+Creating rows can be like this:
+
+```js
+import { tr, td, fragment } from 'std-components';
+
+const toDoList = [
+    { id: 1, description: 'Buy beer', done: false },
+    { id: 2, description: 'Buy milk', done: true },
+    { id: 3, description: 'Take the dog for a walk', done: false },
+    // ...
+];
+
+function createRow( { id, description, done } ) {
+    return tr( {}
+        td( {}, id ),
+        td( {}, description ),
+        td( {}, done ? 'Yes' : 'No' ),
+    );
+}
+
+const rows = toDoList.map( createRow );
+document.querySelector( 'tbody' ).append( fragment( ...rows ) ); // Avoid DOM reflow
+```
+
+That will produce rows such as this:
+
+```html
+<tr>
+    <td>1</td>
+    <td>Buy beer</td>
+    <td>No</td>
+</tr>
+```
+
+Easy-peasy, right? 😉
+
+Now suppose that you need to toggle the "Done" value when the user clicks on "Yes" or "No".
+Just define a `click` event in the corresponding `td` element, through the special property `events` :
+
+```
+td( { events: { click: toggleDone } }, done ? 'Yes' : 'No' ),
+```
+
+where `toggleDone` can be a normal function that updates the To-Do object and the DOM:
+
+```js
+function toggleDone( event ) {
+    const td = event.target;
+    const toDo = toDoList[ td.parentElement.sectionRowIndex ];
+    toDo.done = ! toDo.done; // Toggle
+    td.textContent = toDo.done ? 'Yes' : 'No'; // Refresh the row value
+}
+```
 
 ## Reactivity
 
@@ -140,10 +212,24 @@ where:
 
 
 ### Extra functions
-- `fragment( ...children: Array<string|Node|HTMLElement> ): DocumentFragment` creates a [DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment).
-- `text( value: string = '' ): Text` creates a [text node](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode).
+- `fragment( ...children: Array<string|Node|HTMLElement> ): DocumentFragment` creates a [DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment). It's very useful to avoid DOM reflow.
+  - Example:
+    ```js
+    const users = await getUsers();
+    const tableRows = users.map( u => userToTableRow( u ) );
+    // All table rows will be rendered together, only once:
+    document.querySelector( 'tbody' ).append( fragment( ...tableRows ) );
+    ```
+- `text( value: string = '' ): Text` creates a [text node](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode). Usually not needed, since other functions accept a string as children.
+  - Example:
+    ```js
+    const btn = button( {}, text( 'Ok' ) ); // Same as button( {}, 'Ok' )
+    ```
 - `component< T extends HTMLElement >( tag: string, props: {[key: string]: any} = {}, ...children: Array<string|Node|HTMLElement> ): T` creates any DOM component. You probably won't need to use it.
-
+  - Example:
+    ```js
+    const btn = component( 'button', {}, 'Ok' ); // Same as button( {}, 'Ok' )
+    ```
 
 ## License
 

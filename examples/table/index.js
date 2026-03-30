@@ -37,5 +37,5 @@ async function askThenRemove( event ) {
 }
 
 const users = await getUsers();
-const rows = users.map( u => userRow( u ) );
+const rows = users.map( userRow );
 document.querySelector( 'tbody' ).append( fragment( ...rows ) ); // Fragment avoids DOM reflow
