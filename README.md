@@ -19,14 +19,16 @@ pnpm i std-components
 
 ## Examples
 
-### Simple blog post
-
 ```js
-import { article, header, title, p } from 'std-components';
+import { article, header, h2, p } from 'std-components';
 
-const post = article( { class: 'post' },
-    header( {}, title( {}, 'First Post' ) ),
-    p( {}, 'Hello, world!' )
+const post = article( { class: 'post-card' },
+    header( { class: 'post-header' },
+        h2( { class: 'post-title' }, 'First Post' )
+    ),
+    div( { class: 'post-content' },
+        p( {}, 'Hello, world!' )
+    )
 );
 
 document.body.append( post );
@@ -35,100 +37,18 @@ document.body.append( post );
 produces a `<body>` with:
 
 ```html
-<article class="post">
-    <header><title>First Post</title></header>
-    <p>Hello, world!</p>
+<article class="post-card">
+    <header class="post-header">
+        <h2 class="post-title">First Post</h2>
+    </header>
+    <div class="post-content">
+        <p>Hello, world!</p>
+    </div>
 </article>
 ```
 
-### Table rows
+👉 See [/examples](examples) for more.
 
-Let's say that a users table like this...
-
-```html
-...
-<table>
-    <thead>
-        <tr>
-            <th>User Name</th>
-            <th>E-mail</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-```
-
-...need to be fulfilled with rows like this, from user objects:
-
-```html
-<tr>
-    <td>John Doe</td>
-    <td><a href="mailto:john@doe.com" >john@doe.com</a></td>
-    <td><button class="btn btn-danger" onclick="removeUser" >Remove</button></td>
-</tr>
-```
-
-Using `std-components`, you can create these rows like this:
-
-```ts
-import { tr, td, a, button, fragment } from 'std-components';
-
-function removeUser() { /*...*/ }
-
-function userRow( user: { name: string, email: string } ): HTMLTableRowElement {
-    return tr( {},
-        td( {}, user.name ),
-        td( {}, a( { href: `mailto: ${user.email}` }, user.email ),
-        td( {},
-            button( {
-                class: 'btn btn-danger',
-                events: { click: removeUser }
-            }, 'Remove' )
-        )
-    );
-}
-
-const users = await getUsers();
-const rows = users.map( u => userRow( u ) );
-document.querySelector( 'tbody' ).append( fragment( ...rows ) ); // Fragment avoids DOM reflow
-```
-
-👉 The example above **without using** `std-components` would be:
-
-```ts
-function removeUser() { /*...*/ }
-
-function userRow( user: { name: string, email: string } ): HTMLTableRowElement {
-    const tdName = document.createElement( 'td' );
-    tdName.textContent = name;
-
-    const emailAnchor = document.createElement( 'a' );
-    emailAnchor.href = `mailto: ${user.email}`;
-    emailAnchor.textContent = user.email;
-
-    const tdEmail = document.createElement( 'td' );
-    tdEmail.append( emailAnchor );
-
-    const removeButton = document.createElement( 'button' );
-    removeButton.classList.add( 'btn btn-danger' );
-    removeButton.textContent = 'Remove';
-    removeButton.addEventListener( 'click', removeUser );
-
-    const tdActions = document.createElement( 'td' );
-    tdActions.append( removeButton );
-
-    const tr = document.createElement( 'tr' );
-    tr.append( tdName, tdEmail, tdActions );
-    return tr;
-}
-
-const users = await getUsers();
-const rows = users.map( u => userRow( u ) );
-const fragment = document.createDocumentFragment(); // Avoids DOM reflow
-fragment.append( ...rows );
-document.querySelector( 'tbody' ).append( fragment );
-```
 
 
 ## Reactivity
@@ -186,9 +106,35 @@ where:
 ### Special properties
 
 - `events` is an object that allows to define [standard DOM events](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events) for the element.
-  - Example:
+  - Examples:
     ```js
-    button( { events: { click: () => alert('Hi') } }, 'Say Hi' )
+    // Single event, single listener function
+    button( { events: { click: () => alert('Hi') } }, 'Say Hi' );
+
+    // Multiple events, single function in each
+    input( { events: {
+        focus: event => console.log( `Enter ${event.target}` ),
+        blur: event => console.log( `Left ${event.target}` )
+    } }  );
+
+    // Single event, single function with options - same options as addEventListener's
+    button( { events: {
+        click: { listener: () => alert('Hi'), options: { once: true } }
+    } }, 'Say Hi' );
+
+    // Single event, multiple functions
+    button( { events: {
+        click: [ ()=>alert('Hi'), ()=>alert('Hi again') ]
+    } }, 'Say Hi' );
+
+    // Multiple events, multiple functions with or without options - same options as addEventListener's
+    button( { events: {
+        click: [
+                () => alert('Hi'), // First listener
+                { listener: ()=>alert('Hi again'), options: { once: true } } // Second listener
+        ],
+        mouseover: (event) => console.log( 'Mouse is over', event.target )
+    } }, 'Say Hi' );
     ```
 - `is` is a [special property](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/is) that makes a standard HTML element behave like a defined customized built-in element. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/is) for more.
 

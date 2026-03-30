@@ -1,5 +1,10 @@
 export type Props = {[key: string]: any};
-type Children = Array<string|Node|HTMLElement>;
+export type Children = Array<string|Node|HTMLElement>;
+
+export type EventValue = EventListenerOrEventListenerObject | { listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions };
+export type EventsProperty = Record< string, EventValue|EventValue[] >;
+
+
 
 /**
  * Creates a component.
@@ -26,16 +31,11 @@ export function component< T extends HTMLElement >( tag: string, props: Props = 
                 continue;
             }
             const value = props[ p ];
-            if ( p === 'events' ) {
-                if ( typeof value === 'object' ) {
-                    for ( const event in value ) {
-                        const fn = value[ event ];
-                        if ( typeof fn === 'function' ) {
-                            el.addEventListener( event, fn );
-                        }
-                    }
+            if ( p === 'events' && typeof value === 'object' ) {
+                for ( const eventName in value ) {
+                    addEventToElement( el, eventName, value );
                 }
-                continue; // So that it does not set 'events' as an attribute
+                continue; // Avoid adding 'events' as an attribute
             }
             el.setAttribute( p, value );
         }
@@ -45,6 +45,20 @@ export function component< T extends HTMLElement >( tag: string, props: Props = 
     }
     el.append( ...children );
     return el;
+}
+
+
+function addEventToElement( el: HTMLElement|Node, eventName: string, eventValue: EventValue|EventValue[] ): void {
+    const valueType = typeof eventValue;
+    if ( valueType === 'function' ) {
+        el.addEventListener( eventName, eventValue as EventListener );
+    } else if ( valueType === 'object' && 'listener' in eventValue ) {
+        el.addEventListener( eventName, eventValue[ 'listener' ], eventValue[ 'options' ] );
+    } else if ( Array.isArray( eventValue ) ) {
+        for ( const fnOrObj of eventValue ) {
+            addEventToElement( el, eventName, fnOrObj );
+        }
+    }
 }
 
 
