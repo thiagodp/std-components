@@ -1,6 +1,6 @@
 {
   "name": "std-components",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Standard HTML components as functions",
   "type": "module",
   "source": "index.ts",
