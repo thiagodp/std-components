@@ -112,7 +112,7 @@ Just define a `click` event in the corresponding `td` element, through the speci
 td( { events: { click: toggleDone } }, done ? 'Yes' : 'No' ),
 ```
 
-where `toggleDone` can be a normal function that updates the To-Do object and the DOM:
+where the function `toggleDone` can be a [usual event listener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#the_event_listener_callback) that updates the To-Do object and the DOM:
 
 ```js
 function toggleDone( event ) {
