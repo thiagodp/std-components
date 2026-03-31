@@ -125,7 +125,7 @@ function toggleDone( event ) {
 
 ## Reactivity
 
-If you need reactivity, use a library such as [@preact/signals-core](https://www.npmjs.com/package/@preact/signals-core), [S.js](https://github.com/adamhaile/S) or [usignal](https://github.com/WebReflection/usignal), that are not tied to a UI library/framework.
+If you need reactivity, use `std-components` with a library such as [@preact/signals-core](https://www.npmjs.com/package/@preact/signals-core), [S.js](https://github.com/adamhaile/S) or [usignal](https://github.com/WebReflection/usignal) - that are not tied to a UI library/framework.
 
 Example with `@preact/signals-core`:
 

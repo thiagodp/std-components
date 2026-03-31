@@ -33,7 +33,8 @@ export function component< T extends HTMLElement >( tag: string, props: Props = 
             const value = props[ p ];
             if ( p === 'events' && typeof value === 'object' ) {
                 for ( const eventName in value ) {
-                    addEventToElement( el, eventName, value );
+                    const eventValue = value[ eventName ];
+                    addEventToElement( el, eventName, eventValue );
                 }
                 continue; // Avoid adding 'events' as an attribute
             }
