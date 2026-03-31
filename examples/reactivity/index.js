@@ -1,4 +1,4 @@
-import { button } from 'https://unpkg.com/std-components/dist/index.js';
+import { button } from 'https://unpkg.com/std-components';
 import { signal, effect } from 'https://unpkg.com/@preact/signals-core/dist/signals-core.mjs';
 
 // count starts at 0

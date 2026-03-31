@@ -1,4 +1,4 @@
-import { article, header, div, h2, p } from 'https://unpkg.com/std-components/dist/index.js';
+import { article, header, div, h2, p } from 'https://unpkg.com/std-components';
 
 const firstPost = article( { class: 'post-card' },
     header( { class: 'post-header'}, h2( { class: 'post-title' }, 'First Post' ) ),

@@ -1,4 +1,4 @@
-import { tr, td, button, fragment } from 'https://unpkg.com/std-components/dist/index.js';
+import { tr, td, button, fragment } from 'https://unpkg.com/std-components';
 
 const toDoList = [
   { id: 1, description: "Buy groceries", done: false },
