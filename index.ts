@@ -4,7 +4,15 @@ export type Children = Array<string|Node|HTMLElement>;
 export type EventValue = EventListenerOrEventListenerObject | { listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions };
 export type EventsProperty = Record< string, EventValue|EventValue[] >;
 
+let document = globalThis.document;
 
+/**
+ * Sets the document object for testing purposes. If `undefined`,  defaults to the document in `globalThis`.
+ * @param value
+ */
+export function __setDocument( value?: Document|any ): void {
+    document = value === undefined ? globalThis.document : value;
+}
 
 /**
  * Creates a component.

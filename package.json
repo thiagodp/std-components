@@ -6,16 +6,18 @@
   "source": "index.ts",
   "types": "index.d.ts",
   "exports": {
-    "module": "dist/index.js",
-    "types": "dist/index.d.ts"
+    "module": "index.js",
+    "types": "index.d.ts"
   },
   "files": [
-    "dist"
+    "index.js",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "tsdown",
-    "prepublish": "pnpm run build",
-    "dry": "pnpm publish --dry-run --no-git-checks"
+    "prepublish": "pnpm run build && pnpm test",
+    "dry": "pnpm publish --dry-run --no-git-checks",
+    "test": "vitest run"
   },
   "keywords": [
     "standard",
@@ -31,6 +33,8 @@
   "license": "MIT",
   "packageManager": "pnpm@10.28.1",
   "devDependencies": {
-    "tsdown": "^0.21.6"
+    "happy-dom": "^20.8.9",
+    "tsdown": "^0.21.6",
+    "vitest": "^4.1.2"
   }
 }
