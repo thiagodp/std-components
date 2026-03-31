@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-List Example</title>
+    <script type="module" src="index.js" defer ></script>
+    <style>
+        table {
+            user-select: none;
+        }
+        tbody tr td:nth-child(3) {
+            cursor: pointer;
+            color: blue;
+        }
+        td button {
+            border-radius: 10px;
+            border-width: 1px;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do-List 🚀</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th>Done</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+</html>
