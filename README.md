@@ -81,7 +81,7 @@ const toDoList = [
     // ...
 ];
 
-function createRow( { id, description, done } ) {
+function toDoListRow( { id, description, done } ) {
     return tr( {}
         td( {}, id ),
         td( {}, description ),
@@ -89,7 +89,7 @@ function createRow( { id, description, done } ) {
     );
 }
 
-const rows = toDoList.map( createRow );
+const rows = toDoList.map( toDoListRow );
 document.querySelector( 'tbody' ).append( fragment( ...rows ) ); // Avoid DOM reflow
 ```
 

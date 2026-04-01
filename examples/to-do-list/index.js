@@ -13,7 +13,7 @@ const toDoList = [
   { id: 10, description: "Walk the dog", done: true }
 ];
 
-function createRow( { id, description, done } ) {
+function toDoListRow( { id, description, done } ) {
     const removeButtonTip = 'Remove To-Do ' + id;
     return tr( { 'data-id': String( id ) },
         td( {}, id ),
@@ -47,5 +47,5 @@ function removeToDo( event ) {
     tr.remove();
 }
 
-const tableRows = toDoList.map( createRow );
+const tableRows = toDoList.map( toDoListRow );
 document.querySelector( 'tbody' ).append( fragment( ...tableRows ) ); // Avoids DOM reflow
