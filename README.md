@@ -2,9 +2,17 @@
 [![License](https://img.shields.io/npm/l/std-components?style=for-the-badge&color=green)](https://github.com/thiagodp/std-components/blob/main/LICENSE)
 [![npm](https://img.shields.io/npm/dt/std-components?style=for-the-badge&color=green)](https://www.npmjs.com/package/std-components)
 
-# std-components
+<div align="center">
+    <!-- <img src="https://raw.githubusercontent.com/thiagodp/std-components/refs/heads/main/logo.png" width="349" height="auto" alt="std-components" /> -->
+    <img src="logo.png" width="349" height="auto" alt="std-components" />
+</div>
 
-> 🧩 Standard HTML components as functions
+<p align="center">
+    <em>Standard HTML components as functions</em>
+</p>
+
+
+# std-components
 
 - 🌳 Composable, typed, [tree shakeable](https://en.wikipedia.org/wiki/Tree_shaking) functions that create standard DOM components.
 - ⚡ No build step required.
