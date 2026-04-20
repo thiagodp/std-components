@@ -3,11 +3,11 @@
   "version": "1.0.0-alpha.1",
   "description": "Standard HTML components as functions",
   "type": "module",
-  "source": "index.ts",
-  "types": "index.d.ts",
+  "source": "./index.ts",
+  "types": "./index.d.ts",
   "exports": {
-    "module": "index.js",
-    "types": "index.d.ts"
+    "module": "./index.js",
+    "types": "./index.d.ts"
   },
   "files": [
     "index.js",
