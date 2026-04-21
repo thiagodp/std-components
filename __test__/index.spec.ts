@@ -1,6 +1,6 @@
 import { it, expect, beforeAll, afterAll } from 'vitest';
 import { __setDocument, button } from '../index';
-import { Window } from 'happy-dom';
+import { Window, Event } from 'happy-dom';
 
 beforeAll( () => {
     const window = new Window();
@@ -12,7 +12,7 @@ afterAll( () => {
 } );
 
 
-it( 'can add a listener in an event', () => {
+it( 'can add a listener to an event', () => {
 
     let i = 0;
     const fn = () => { i++ };
@@ -24,7 +24,7 @@ it( 'can add a listener in an event', () => {
 } );
 
 
-it( 'can add an array of listeners in an event', () => {
+it( 'can add an array of listeners to an event', () => {
 
     let i = 0;
     const fn1 = () => { i++ };
@@ -36,7 +36,7 @@ it( 'can add an array of listeners in an event', () => {
 } );
 
 
-it( 'can add options in a listener event', () => {
+it( 'can add options to a listener event', () => {
 
     let i = 0;
     const fn = () => { i++ };
@@ -49,7 +49,7 @@ it( 'can add options in a listener event', () => {
 } );
 
 
-it( 'can add an array of listeners or objects with options in an event', () => {
+it( 'can add an array of listeners or objects with options to an event', () => {
 
     let i = 0;
     const fn1 = () => { i++ };
@@ -60,4 +60,29 @@ it( 'can add an array of listeners or objects with options in an event', () => {
     btn.click(); // 1
 
     expect( i ).toBe( 7 );
+} );
+
+
+it( 'can set a custom event', () => {
+
+    let i = 0;
+    const fn = () => { i++ };
+    const btn = button( { events: { myCustomEvent: fn } } );
+
+    const ev: Event = new Event( 'myCustomEvent' );
+    btn.dispatchEvent( ev as any );
+
+    expect( i ).toBe( 1 );
+} );
+
+
+it( 'can set a dataset property', () => {
+    const btn = button( { 'data-foo': 'bar' } );
+    expect( btn.dataset.foo ).toBe( 'bar' );
+} );
+
+
+it( 'can set an id', () => {
+    const btn = button( { id: 'b' } );
+    expect( btn.id ).toBe( 'b' );
 } );

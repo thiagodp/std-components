@@ -1,8 +1,111 @@
-export type Props = {[key: string]: any};
-export type Children = Array<string|Node|HTMLElement>;
 
-export type EventValue = EventListenerOrEventListenerObject | { listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions };
+type CommonAsyncCallback = () => Promise<void>;
+type CommonCallback = () => void;
+
+export type EventValue = EventListenerOrEventListenerObject | { listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions } | CommonCallback | CommonAsyncCallback;
 export type EventsProperty = Record< string, EventValue|EventValue[] >;
+
+export type Props = Partial<{
+
+    id: string,
+    class: string,
+    style: string,
+    title: string,
+    lang: string,
+    dir: string,
+    hidden: string,
+    tabindex: number,
+    accesskey: string,
+
+    dataset: {[key: string]: any},
+
+    events: Partial<{
+
+        load: EventValue,
+        error: EventValue,
+        command: EventValue,
+
+        beforeinput: EventValue,
+        input: EventValue,
+        change: EventValue,
+
+        click: EventValue,
+        dblclick: EventValue,
+        auxclick: EventValue,
+        wheel: EventValue,
+        contextmenu: EventValue,
+
+        mouseover: EventValue,
+        mouseout: EventValue,
+        mousemove: EventValue,
+        mouseenter: EventValue,
+        mouseleave: EventValue,
+        mousedown: EventValue,
+        mouseup: EventValue,
+
+        touchstart: EventValue,
+        touchmove: EventValue,
+        touchcancel: EventValue,
+        touchend: EventValue,
+
+        gotpointercapture: EventValue,
+        lostpointercapture: EventValue,
+        pointerenter: EventValue,
+        pointerout: EventValue,
+        pointerover: EventValue,
+        pointermove: EventValue,
+        pointerleave: EventValue,
+        pointercancel: EventValue,
+        pointerdown: EventValue,
+        pointerup: EventValue,
+        pointerrawupdate: EventValue,
+
+        scroll: EventValue,
+        scrollend: EventValue,
+
+        keypress: EventValue, // Deprecated
+        keydown: EventValue,
+        keyup: EventValue,
+
+        focus: EventValue,
+        focusin: EventValue,
+        focusout: EventValue,
+        blur: EventValue,
+
+        drag: EventValue,
+        drop: EventValue,
+        dragstart: EventValue,
+        dragend: EventValue,
+        dragenter: EventValue,
+        dragover: EventValue,
+        dragleave: EventValue,
+
+        fullscreenchange: EventValue,
+        fullscreenerror: EventValue,
+
+        beforetoggle: EventValue,
+        toggle: EventValue,
+
+        animationstart: EventValue,
+        animationcancel: EventValue,
+        animationiteration: EventValue,
+        animationend: EventValue,
+
+        transitionstart: EventValue,
+        transitionrun: EventValue,
+        transitioncancel: EventValue,
+        transitionend: EventValue,
+
+        copy: EventValue,
+        cut: EventValue,
+        paste: EventValue,
+
+    }> | EventsProperty,
+
+}> & {[key: string]: any};
+
+
+export type Children = Array<string|Node|HTMLElement>;
 
 let document = globalThis.document;
 
