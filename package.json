@@ -1,8 +1,7 @@
 {
   "name": "std-components",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Standard HTML components as functions",
-
   "type": "module",
   "source": "./index.ts",
   "types": "./index.d.ts",
@@ -15,7 +14,6 @@
     "index.js",
     "index.d.ts"
   ],
-
   "scripts": {
     "build": "tsdown",
     "prepublish": "pnpm run build && pnpm test",
@@ -35,7 +33,6 @@
   "author": "Thiago Delgado Pinto",
   "license": "MIT",
   "packageManager": "pnpm@10.28.1",
-
   "devDependencies": {
     "happy-dom": "^20.8.9",
     "tsdown": "^0.21.6",
