@@ -13,7 +13,7 @@ const toDoList = [
   { id: 10, description: "Walk the dog", done: true }
 ];
 
-function toDoListRow( { id, description, done } ) {
+function toDoRow( { id, description, done } ) {
     const removeButtonTip = 'Remove To-Do ' + id;
     return tr( { 'data-id': String( id ) },
         td( {}, id ),
@@ -31,7 +31,8 @@ function toDoListRow( { id, description, done } ) {
 
 function toggleDone( event ) {
     const td = event.target;
-    const toDo = toDoList[ td.parentElement.sectionRowIndex ];
+    const tr = td.parentElement;
+    const toDo = toDoList[ tr.sectionRowIndex ];
     toDo.done = ! toDo.done;
     td.textContent = toDo.done ? 'Yes' : 'No';
 }
@@ -47,5 +48,5 @@ function removeToDo( event ) {
     tr.remove();
 }
 
-const tableRows = toDoList.map( toDoListRow );
-document.querySelector( 'tbody' ).append( fragment( ...tableRows ) ); // Avoids DOM reflow
+const rows = toDoList.map( toDoRow );
+document.querySelector( 'tbody' ).append( fragment( ...rows ) ); // Use a fragment to avoid DOM reflow

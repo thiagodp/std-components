@@ -22,8 +22,9 @@
 ## Install
 
 ```bash
-pnpm i std-components
+npm i std-components
 ```
+> Show your support to opensource projects. Consider giving it a star (⭐).
 
 ## Examples
 
